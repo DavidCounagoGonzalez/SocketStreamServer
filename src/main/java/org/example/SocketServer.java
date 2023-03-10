@@ -1,56 +1,50 @@
 package org.example;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class SocketServer {
 
     public static void main(String[] args){
         try{
-            System.out.println("Obteniendo factoria de sockets servidor");
-
-            SSLServerSocketFactory serverSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-
             System.out.println("Creando socket servidor");
 
-            SSLServerSocket serverSocket=(SSLServerSocket) serverSocketFactory.createServerSocket();
+            ServerSocket serverSocket=new ServerSocket();
 
             System.out.println("Realizando el bind");
 
-            InetSocketAddress addr=new InetSocketAddress("localhost", 5555);
-            serverSocket.setReuseAddress(true);
+            InetSocketAddress addr=new InetSocketAddress("localhost",5555);
             serverSocket.bind(addr);
 
             System.out.println("Aceptando conexiones");
 
-            SSLSocket newSocket=(SSLSocket) serverSocket.accept();
+            Socket newSocket= serverSocket.accept();
 
+            System.out.println("Conexi�n recibida");
 
-            System.out.println("Conexión recibida");
-
-            InputStream is= newSocket.getInputStream();
+            InputStream is=newSocket.getInputStream();
+            OutputStream os=newSocket.getOutputStream();
 
             byte[] mensaje=new byte[25];
             is.read(mensaje);
 
-
             System.out.println("Mensaje recibido: "+new String(mensaje));
-            System.out.println("Cerrando el nuevo Socket");
+
+            System.out.println("Cerrando el nuevo socket");
 
             newSocket.close();
 
-            System.out.println("Cerando el socket servidor");
+            System.out.println("Cerrando el socket servidor");
 
             serverSocket.close();
 
             System.out.println("Terminado");
 
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch (IOException e) {
         }
     }
-
 }
