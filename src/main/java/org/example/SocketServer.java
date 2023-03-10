@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,22 +18,22 @@ public class SocketServer {
 
             System.out.println("Realizando el bind");
 
-            InetSocketAddress addr=new InetSocketAddress("localhost",5555);
+            InetSocketAddress addr=new InetSocketAddress("10.0.9.15",5555);
             serverSocket.bind(addr);
 
             System.out.println("Aceptando conexiones");
 
             Socket newSocket= serverSocket.accept();
 
-            System.out.println("Conexi�n recibida");
+            System.out.println("Conexion recibida");
 
             InputStream is=newSocket.getInputStream();
+            DataInputStream dis = new DataInputStream(is);
             OutputStream os=newSocket.getOutputStream();
 
-            byte[] mensaje=new byte[25];
-            is.read(mensaje);
+            String mensaje = dis.readUTF();
 
-            System.out.println("Mensaje recibido: "+new String(mensaje));
+            System.out.println("Mensaje recibido: "+mensaje);
 
             System.out.println("Cerrando el nuevo socket");
 
