@@ -14,17 +14,7 @@ public class SocketServer {
 
     static ArrayList<HiloServer> listaHilos;
 
-    static ArrayList<Integer> puertos;
-
-    static InetAddress addr,  addr2;
-
-    static {
-        try {
-            addr = InetAddress.getByName("127.0.0.1");
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    static ArrayList<Socket> puertos;
 
     public static void main(String[] args){
         new InterfazServer();
@@ -38,10 +28,7 @@ public class SocketServer {
 
             while(!servidor.isClosed()){
                 sc = servidor.accept();
-                addr2 = sc.getInetAddress();
                 System.out.println(sc);
-                int pt = sc.getPort();
-                System.out.println(pt);
 
                 DataInputStream in = new DataInputStream(sc.getInputStream());
                 DataOutputStream out = new DataOutputStream(sc.getOutputStream());
@@ -56,7 +43,7 @@ public class SocketServer {
                 System.out.println(listaHilos);
                 hilo.start();
 
-                puertos.add(pt);
+                puertos.add(sc);
                 System.out.println(puertos);
 
                 System.out.println("Creada la conexión con el cliente " + nombreCliente);
@@ -77,8 +64,7 @@ public class SocketServer {
                 for (int i = 0; i < listaHilos.size(); i++){
                     HiloServer supp = listaHilos.get(i);
                     if(supp.getName().equals(donde)){
-                        sc= supp.getSocket();
-                        //sc = new Socket(addr2, puertos.get(i), addr, 5554);
+                        sc= puertos.get(i);
                     }
                 }
             }
@@ -93,17 +79,8 @@ public class SocketServer {
         }
     }
 
-    /*public static void recibo(){
-        try {
-            InputStream dis = sc.getInputStream();
-            DataInputStream is = new DataInputStream(dis);
-            String recibido = is.readUTF();
-            if (recibido == null){
-                System.out.println(0);
-            }
-            Pestanas.chat.append(recibido+"\n");
-        }catch(IOException exc){
-            exc.printStackTrace();
-        }
-    }*/
+    public static void borra(int puerto){
+        puertos.remove(puerto);
+        listaHilos.remove(puerto);
+    }
 }

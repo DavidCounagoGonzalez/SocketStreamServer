@@ -37,6 +37,7 @@ public class HiloServer extends Thread{
                             HiloServer sup = listaHilos.get(i);
                             if(sup.getName().equals(nombreCliente)){
                                 listaHilos.remove(i);
+                                SocketServer.borra(i);
                                 System.out.println(listaHilos);
                             }
                         }
@@ -46,7 +47,7 @@ public class HiloServer extends Thread{
                     Pestanas.chat.append(mensaje + "\n");
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Se ha desconectado");
             }
     }
 }
