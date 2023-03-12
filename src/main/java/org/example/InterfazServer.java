@@ -7,10 +7,10 @@ public class InterfazServer {
 
     public static JButton btnEnviar, btnCerrar;
     public static JTextField txtEscribe;
-    public static JTextArea chat;
-    public static JScrollPane scroll;
     public static JFrame frame ;
     public static JLabel lblTitulo;
+
+    public static JTabbedPane tabPanel;
 
     public InterfazServer(){
 
@@ -18,14 +18,8 @@ public class InterfazServer {
         lblTitulo.setFont(new Font("TimesRoman", Font.ITALIC, 25));
         lblTitulo.setBounds(225,25,400,25);
 
-
-        chat = new JTextArea();
-        chat.setEditable(false);
-        chat.setFont(new Font("TimesRoman", Font.TRUETYPE_FONT, 15));
-        scroll = new JScrollPane(chat);
-        scroll.setBorder(BorderFactory.createMatteBorder(2,2,2,2, Color.BLACK));
-        scroll.setBounds(40,80,420,250);
-
+        tabPanel= new JTabbedPane();
+        tabPanel.setBounds(40,80,420,250);
 
         txtEscribe = new JTextField();
         txtEscribe.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK));
@@ -48,7 +42,7 @@ public class InterfazServer {
         panel.setLayout(null);
         panel.setBounds(0,0,500,550);
         panel.add(lblTitulo);
-        panel.add(scroll);
+        panel.add(tabPanel);
         panel.add(txtEscribe);
         panel.add(btnEnviar);
         panel.add(btnCerrar);
@@ -66,5 +60,9 @@ public class InterfazServer {
 
     public static void main(String[] args){
         new InterfazServer();
+    }
+
+    public static void pestanas(){
+
     }
 }
