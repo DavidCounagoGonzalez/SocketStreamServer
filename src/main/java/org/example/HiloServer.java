@@ -10,8 +10,8 @@ public class HiloServer extends Thread{
 
      DataInputStream in;
      DataOutputStream out;
-     private String nombreCliente;
-     private Socket socket;
+     static String nombreCliente;
+     static Socket socket;
 
      private ArrayList<HiloServer> listaHilos;
 
@@ -19,6 +19,10 @@ public class HiloServer extends Thread{
         this.socket = socket;
         this.listaHilos = hilos;
         this.nombreCliente = nombreCliente;
+    }
+
+    public static Socket getSocket() {
+        return socket;
     }
 
     @Override
@@ -29,6 +33,13 @@ public class HiloServer extends Thread{
                 while(true){
                     String mensaje = in.readUTF();
                     if(mensaje.equals(nombreCliente + " se ha desconectado")){
+                        for(int i = 0; i<listaHilos.size(); i++){
+                            HiloServer sup = listaHilos.get(i);
+                            if(sup.getName().equals(nombreCliente)){
+                                listaHilos.remove(i);
+                                System.out.println(listaHilos);
+                            }
+                        }
                         InterfazServer.tabPanel.removeTabAt(InterfazServer.tabPanel.indexOfTab(nombreCliente));
                         break;
                     }
