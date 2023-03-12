@@ -28,14 +28,13 @@ public class SocketServer {
 
             while(!servidor.isClosed()){
                 sc = servidor.accept();
-                System.out.println(sc);
 
                 DataInputStream in = new DataInputStream(sc.getInputStream());
                 DataOutputStream out = new DataOutputStream(sc.getOutputStream());
 
                 out.writeUTF("Dame un nombre para identificarte");
                 String nombreCliente = in.readUTF();
-                InterfazServer.tabPanel.add(nombreCliente, new Pestanas());
+                InterfazServer.tabPanel.add(nombreCliente, new Pestanas(nombreCliente));
 
                 HiloServer hilo  = new HiloServer(sc, listaHilos, nombreCliente);
                 hilo.setName(nombreCliente);
@@ -81,6 +80,5 @@ public class SocketServer {
 
     public static void borra(int puerto){
         puertos.remove(puerto);
-        listaHilos.remove(puerto);
     }
 }

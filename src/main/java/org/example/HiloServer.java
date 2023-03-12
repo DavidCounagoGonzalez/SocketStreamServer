@@ -32,17 +32,18 @@ public class HiloServer extends Thread{
                 out = new DataOutputStream(socket.getOutputStream());
                 while(true){
                     String mensaje = in.readUTF();
-                    if(mensaje.equals(nombreCliente + " se ha desconectado")){
-                        for(int i = 0; i<listaHilos.size(); i++){
+                    if(mensaje.equals(nombreCliente + " se ha desconectado")) {
+                        if(listaHilos.size()>0){
+                        for (int i = 0; i < listaHilos.size(); i++) {
                             HiloServer sup = listaHilos.get(i);
-                            if(sup.getName().equals(nombreCliente)){
+                            if (sup.getName().equals(nombreCliente)) {
                                 listaHilos.remove(i);
                                 SocketServer.borra(i);
                                 System.out.println(listaHilos);
                             }
                         }
-                        InterfazServer.tabPanel.removeTabAt(InterfazServer.tabPanel.indexOfTab(nombreCliente));
                         break;
+                    }
                     }
                     Pestanas.chat.append(mensaje + "\n");
                 }
