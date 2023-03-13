@@ -13,7 +13,7 @@ public class Pestanas extends JPanel{
     public Pestanas(String title){
         setLayout(null);
         chat = new JTextArea();
-        chat.setEditable(true);
+        chat.setEditable(false);
         chat.setFont(new Font("TimesRoman", Font.TRUETYPE_FONT, 15));
         scroll = new JScrollPane(chat);
         scroll.setBorder(BorderFactory.createMatteBorder(2,2,2,2, Color.BLACK));
