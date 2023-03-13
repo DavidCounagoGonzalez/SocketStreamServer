@@ -31,6 +31,8 @@ public class HiloServer extends Thread{
                 out = new DataOutputStream(socket.getOutputStream());
                 while(true){
                     String mensaje = in.readUTF();
+                    String[] partes = mensaje.split("-");
+                    System.out.println(partes[0]);
                     if(mensaje.equals(nombreCliente + " se ha desconectado")) {
                         if(listaHilos.size()>0){
                         for (int i = 0; i < listaHilos.size(); i++) {
@@ -45,8 +47,8 @@ public class HiloServer extends Thread{
                     }
                     }
                     JTextArea support;
-                    if(mapArea.containsKey(nombreCliente)) {
-                        support = mapArea.get(nombreCliente);
+                    if(mapArea.containsKey(partes[0])) {
+                        support = mapArea.get(partes[0]);
                         support.append(mensaje + "\n");
                     }
                 }
