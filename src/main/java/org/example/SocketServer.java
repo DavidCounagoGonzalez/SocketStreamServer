@@ -41,7 +41,6 @@ public class SocketServer {
                 mapArea.put(nombreCliente, Pestanas.chat);
                 System.out.println(mapArea);
                 JTextArea support = mapArea.get(nombreCliente);
-                support.append("Hola");
 
                 HiloServer hilo  = new HiloServer(sc, listaHilos, nombreCliente, mapArea);
                 hilo.setName(nombreCliente);
