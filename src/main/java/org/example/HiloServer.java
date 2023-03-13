@@ -33,8 +33,6 @@ public class HiloServer extends Thread{
                     JTextArea support;
                     String mensaje = in.readUTF();
                     String[] partes = mensaje.split("-");
-                    System.out.println(partes[0]);
-                    System.out.println(mensaje);
                     if(mensaje.equals(partes[0] + "--> se ha desconectado")) {
                         if(mapArea.containsKey(partes[0])) {
                             support = mapArea.get(partes[0]);

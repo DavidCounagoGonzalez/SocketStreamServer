@@ -40,17 +40,14 @@ public class SocketServer {
                 String nombreCliente = in.readUTF();
                 InterfazServer.tabPanel.add(nombreCliente, new Pestanas(nombreCliente));
                 mapArea.put(nombreCliente, Pestanas.chat);
-                System.out.println(mapArea);
                 JTextArea support = mapArea.get(nombreCliente);
 
                 HiloServer hilo  = new HiloServer(sc, listaHilos, nombreCliente, mapArea);
                 hilo.setName(nombreCliente);
                 listaHilos.add(hilo);
-                System.out.println(listaHilos);
                 hilo.start();
 
                 puertos.add(sc);
-                System.out.println(puertos);
 
                 System.out.println("Creada la conexión con el cliente " + nombreCliente);
             }
