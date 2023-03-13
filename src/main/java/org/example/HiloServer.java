@@ -1,10 +1,12 @@
 package org.example;
 
+import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class HiloServer extends Thread{
 
@@ -12,17 +14,14 @@ public class HiloServer extends Thread{
      DataOutputStream out;
      static String nombreCliente;
      static Socket socket;
-
      private ArrayList<HiloServer> listaHilos;
+     private Map<String, JTextArea> mapArea;
 
-    public HiloServer(Socket socket, ArrayList<HiloServer> hilos, String nombreCliente) {
+    public HiloServer(Socket socket, ArrayList<HiloServer> hilos, String nombreCliente, Map mapArea) {
         this.socket = socket;
         this.listaHilos = hilos;
         this.nombreCliente = nombreCliente;
-    }
-
-    public static Socket getSocket() {
-        return socket;
+        this.mapArea = mapArea;
     }
 
     @Override
@@ -45,7 +44,11 @@ public class HiloServer extends Thread{
                         break;
                     }
                     }
-                    Pestanas.chat.append(mensaje + "\n");
+                    JTextArea support;
+                    if(mapArea.containsKey(nombreCliente)) {
+                        support = mapArea.get(nombreCliente);
+                        support.append(mensaje + "\n");
+                    }
                 }
             } catch (IOException e) {
                 System.out.println("Se ha desconectado");

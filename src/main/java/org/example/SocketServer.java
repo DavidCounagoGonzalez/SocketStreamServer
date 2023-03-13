@@ -1,13 +1,14 @@
 package org.example;
 
 
+import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class SocketServer {
     static Socket sc;
@@ -15,6 +16,8 @@ public class SocketServer {
     static ArrayList<HiloServer> listaHilos;
 
     static ArrayList<Socket> puertos;
+
+    static Map<String, JTextArea> mapArea = new HashMap<String, JTextArea>();
 
     public static void main(String[] args){
         new InterfazServer();
@@ -35,8 +38,12 @@ public class SocketServer {
                 out.writeUTF("Dame un nombre para identificarte");
                 String nombreCliente = in.readUTF();
                 InterfazServer.tabPanel.add(nombreCliente, new Pestanas(nombreCliente));
+                mapArea.put(nombreCliente, Pestanas.chat);
+                System.out.println(mapArea);
+                JTextArea support = mapArea.get(nombreCliente);
+                support.append("Hola");
 
-                HiloServer hilo  = new HiloServer(sc, listaHilos, nombreCliente);
+                HiloServer hilo  = new HiloServer(sc, listaHilos, nombreCliente, mapArea);
                 hilo.setName(nombreCliente);
                 listaHilos.add(hilo);
                 System.out.println(listaHilos);
