@@ -2,6 +2,7 @@ package org.example;
 
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -86,5 +87,12 @@ public class SocketServer {
 
     public static void borra(int puerto){
         puertos.remove(puerto);
+        listaHilos.remove(puerto);
     }
+
+    public static void Salir() throws IOException {
+        InterfazServer.frame.dispatchEvent(new WindowEvent(InterfazServer.frame, WindowEvent.WINDOW_CLOSING));
+        sc.close();
+    }
+
 }

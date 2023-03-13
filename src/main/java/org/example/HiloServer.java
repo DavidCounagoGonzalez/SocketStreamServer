@@ -44,7 +44,6 @@ public class HiloServer extends Thread{
                         for (int i = 0; i < listaHilos.size(); i++) {
                             HiloServer sup = listaHilos.get(i);
                             if (sup.getName().equals(partes[0])) {
-                                listaHilos.remove(i);
                                 SocketServer.borra(i);
                                 mapArea.remove(partes[0]);
                                 System.out.println(listaHilos);

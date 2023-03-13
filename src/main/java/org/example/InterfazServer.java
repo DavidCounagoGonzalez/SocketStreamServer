@@ -2,6 +2,7 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class InterfazServer {
 
@@ -14,9 +15,9 @@ public class InterfazServer {
 
     public InterfazServer(){
 
-        lblTitulo = new JLabel("XAT");
+        lblTitulo = new JLabel("CHAT SERVER");
         lblTitulo.setFont(new Font("TimesRoman", Font.ITALIC, 25));
-        lblTitulo.setBounds(225,25,400,25);
+        lblTitulo.setBounds(150,25,400,25);
 
         tabPanel= new JTabbedPane();
         tabPanel.setBounds(40,80,420,250);
@@ -30,12 +31,23 @@ public class InterfazServer {
         btnEnviar.setBounds(340,340, 120, 40);
         btnEnviar.setToolTipText("Envia el mensaje escrito");
         btnEnviar.addActionListener(act -> {
-            SocketServer.envio();
+            try {
+                SocketServer.envio();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, "No hay clientes coenctados");
+            }
         });
 
         btnCerrar = new JButton("Cerrar");
         btnCerrar.setBounds(200,400, 75,40);
         btnCerrar.setToolTipText("Cierra el chat");
+        btnCerrar.addActionListener(act ->{
+            try {
+                SocketServer.Salir();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         JPanel panel = new JPanel();
         panel.setOpaque(false);
@@ -62,7 +74,4 @@ public class InterfazServer {
         new InterfazServer();
     }
 
-    public static void pestanas(){
-
-    }
 }
