@@ -30,6 +30,11 @@ public class HiloServer extends Thread{
                 in = new DataInputStream(socket.getInputStream());
                 out = new DataOutputStream(socket.getOutputStream());
                 while(true){
+                    /*
+                    Cuando llegue un mensaje el servidor recoge el nombre del cliente
+                    Tanto para seleccionar la pestaña en que se imprime el mensaje,
+                    como para poder saber en caso de desconexión la posición de sus datos y eliminarlos
+                     */
                     JTextArea support;
                     String mensaje = in.readUTF();
                     String[] partes = mensaje.split("-");
